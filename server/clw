@@ -1,0 +1,46 @@
+#!/usr/bin/python
+
+import myql
+import logging
+import urllib2
+import xml.dom.minidom
+from xml.dom import minidom
+from pprint import pprint
+import datetime
+import codecs
+def getCardinal(angle):
+	directions = 8
+	degree = 360 / directions
+	angle = angle + degree/2
+	if angle >= (0 * degree) and angle < (1 * degree):
+		return "N"
+	if angle >= (1 * degree) and angle < (2 * degree):
+		return "NE"
+	if angle >= (2 * degree) and angle < (3 * degree):
+		return "E"
+	if angle >= (3 * degree) and angle < (4 * degree):
+		return "SE"
+	if angle >= (4 * degree) and angle < (5 * degree):
+		return "S"
+	if angle >= (5 * degree) and angle < (6 * degree):
+		return "SW"
+	if angle >= (6 * degree) and angle < (7 * degree):
+		return "W"
+	if angle >= (7 * degree) and angle < (8 * degree):
+		return "NW"
+	return "N"
+
+#Code of my city
+CODE = "2459115"
+#Change to false if you want Fahrenheit and mph
+METRIC = False
+
+from myql.utils import pretty_json, pretty_xml
+yql = myql.MYQL(format='xml', community=True)
+
+#can't trust windchill if specified in celsius (must parse from fahrenheit)
+weather_xml = yql.raw_query('select * from weather.forecast where woeid = ' + CODE + ' and u ="f"')
+xml = xml.dom.minidom.parseString(weather_xml.content)
+xml_pretty_str = xml.toprettyxml()
+#pprint(weather_xml.content)
+print(xml_pretty_str)

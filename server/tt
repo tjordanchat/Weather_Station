@@ -1,0 +1,22 @@
+#!/bin/bash 
+
+./darksky > DS
+export PRECIP=$( cat DS  | jq ".daily.data[0].precipProbability" ) 2>/dev/null
+
+export RAIN
+
+if echo "$PRECIP > .17" | bc >/dev/null
+	then
+	RAIN=25
+	elif "$PRECIP > .37" | bc >/dev/null
+		then
+	RAIN=50
+	elif "$PRECIP > .63" | bc >/dev/null
+		then
+	RAIN=75
+	elif "$PRECIP > .87.5" | bc >/dev/null
+		then
+		RAIN=100
+fi
+		echo $RAIN
+

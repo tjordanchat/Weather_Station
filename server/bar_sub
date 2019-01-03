@@ -1,0 +1,14 @@
+#!/bin/bash
+
+export NOW=$( cat DS 2>/dev/null| jq .hourly.data[0].pressure )
+export SOON=$( cat DS 2>/dev/null| jq .hourly.data[1].pressure )
+
+if echo "$NOW > $SOON" bc >/dev/null
+	then
+	DIR=Minus
+	else 
+		DIR=Plus
+		fi
+		BAR=$( echo "( $NOW - 969 ) / 20.4" | bc )
+
+		cp assets/${DIR}_$BAR.jpg BAR.jpg
