@@ -1,1 +1,1 @@
-curl https://api.darksky.net/forecast/d139fe35e51438a0bd7b376b8b40943f/40.7,-74 | jq .
+curl https://api.darksky.net/forecast/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/40.7,-74 | jq .
